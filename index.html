@@ -19,6 +19,21 @@
                case 2: return "Scissors"
            }
         }
+
+        function playRound(playerChoice,computerPlay){
+            playerChoice=playerChoice.charAt(0)+playerChoice.slice(1);
+            if (playerChoice==computerPlay){
+                return ("It's a tie, you both choice %s",playerChoice);
+            } else if ((playerChoice=="Scissors" && computerPlay=="Paper") ||
+                       (playerChoice=="Paper" && computerPlay=="Rock") ||
+                       (playerChoice=="Rock" && computerPlay=="Scissors") 
+            ) {
+                return ("You won! %s beats %s",playerChoice,computerPlay)
+            } else {
+                return ("You lose! %s beats %s",computerPlay,playerChoice)
+            }
+
+        }
     </script>
 </body>
 
