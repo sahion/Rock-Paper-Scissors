@@ -5,13 +5,20 @@
 </head>
 <body>
 
-
-
+    <button class="choice" id="Rock">Rock</button>
+    <button class="choice" id="Paper">Paper</button>
+    <button class="choice" id="Scissors">Scissors</button>
+    <div><p id="result">Результат<p>
+        <p id="score">Ваш счёт:<span id="yourScore">0</span> Счёт компьютера: <span id="computerScore">0</span></p>
+    </div>
     <script>
 
+const buttons = document.querySelectorAll('.choice');
+const pResult = document.querySelector('#result');
+const spanYourScore = document.querySelector('#yourScore');
+const spanComputerScore = document.querySelector('#computerScore');
         function computerPlay(){
            let choice = Math.floor(Math.random()*3);
-           let result;
            switch (choice){
 
                case 0: 
@@ -27,50 +34,46 @@
 
         }
 
-        function playRound(playerChoice,computerSign=computerPlay() ){
-            playerChoice=playerChoice.charAt(0)+playerChoice.slice(1).toLowerCase();
+        let yourScore=0;
+        let computerScore=0;
+
+
+        function playRound(e){
+            let playerChoice=e.textContent;
+            console.log('hih');
+            let computerSign=computerPlay();
             if (playerChoice==computerSign){
-                return `It's a tie, you both choice ${playerChoice}`;
+                showResult(pResult,`It's a tie, you both choice ${playerChoice}`);
             } else if ((playerChoice=="Scissors" && computerSign=="Paper") ||
                        (playerChoice=="Paper" && computerSign=="Rock") ||
                        (playerChoice=="Rock" && computerSign=="Scissors") 
             ) {
-                return `You won! ${playerChoice}, beats ${computerSign}`;
+                yourScore++;
+                showResult(pResult,`You won! ${playerChoice}, beats ${computerSign}`);
+                showResult(spanYourScore,yourScore);
+               
             } else {
-                return `You lose! ${computerSign} beats ${playerChoice}`;
+                computerScore++;
+                showResult(pResult,`You lose! ${computerSign} beats ${playerChoice}`);
+                showResult(spanComputerScore,computerScore);
             }
+            if (yourScore==5){
+                showResult(pResult,`You won this match!`);
+            } else if (computerScore==5){
+                showResult(pResult,`You lose this match!`);
+            }
+            
         }
 
-            function showResult(result){
-                console.log(result);
+            function showResult(where,result){
+                where.textContent=result;
+                where.currentTime="0";
             }
 
-            function game(){
-                let yourScore=0;
-                let computerScore=0;
-                while (yourScore<3 && computerScore<3){
-                    yourChoice=prompt("Write your choice (Rock, Paper or Scissors?)");
-                    computerChoice=computerPlay();
-                    let resultOfRound=playRound(yourChoice,computerChoice);
-                   switch(resultOfRound[4]){
-
-                       case 'w':
-                       yourScore++;
-                       break;
-
-                       case "l":
-                       computerScore++;
-                       break;
-                   }
-                   showResult(resultOfRound);
-                }
-            
-                
-             let ResultOfGame = (yourScore==3) ? (`You won this game! Score is ${yourScore} - ${computerScore}`):(`You lose this game! Score is ${yourScore} - ${computerScore}`);
-             showResult(ResultOfGame);
-             
-            }
-            game();
+            buttons.forEach(button => button.addEventListener('click',function(){
+                if (yourScore<5 && computerScore<5)
+                playRound(button);
+            }));
     </script>
 </body>
 

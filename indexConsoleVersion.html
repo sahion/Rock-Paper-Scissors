@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+</head>
+<body>
+
+
+
+    <script>
+
+        function computerPlay(){
+           let choice = Math.floor(Math.random()*3);
+           let result;
+           switch (choice){
+
+               case 0: 
+               return "Rock";
+                break;
+               case 1: 
+               return "Paper";
+                break;
+               case 2: 
+               return "Scissors";
+                break;
+           }
+
+        }
+
+        function playRound(playerChoice,computerSign=computerPlay() ){
+            playerChoice=playerChoice.charAt(0)+playerChoice.slice(1).toLowerCase();
+            if (playerChoice==computerSign){
+                return `It's a tie, you both choice ${playerChoice}`;
+            } else if ((playerChoice=="Scissors" && computerSign=="Paper") ||
+                       (playerChoice=="Paper" && computerSign=="Rock") ||
+                       (playerChoice=="Rock" && computerSign=="Scissors") 
+            ) {
+                return `You won! ${playerChoice}, beats ${computerSign}`;
+            } else {
+                return `You lose! ${computerSign} beats ${playerChoice}`;
+            }
+        }
+
+            function showResult(result){
+                console.log(result);
+            }
+
+            function game(){
+                let yourScore=0;
+                let computerScore=0;
+                while (yourScore<3 && computerScore<3){
+                    yourChoice=prompt("Write your choice (Rock, Paper or Scissors?)");
+                    computerChoice=computerPlay();
+                    let resultOfRound=playRound(yourChoice,computerChoice);
+                   switch(resultOfRound[4]){
+
+                       case 'w':
+                       yourScore++;
+                       break;
+
+                       case "l":
+                       computerScore++;
+                       break;
+                   }
+                   showResult(resultOfRound);
+                }
+            
+                
+             let ResultOfGame = (yourScore==3) ? (`You won this game! Score is ${yourScore} - ${computerScore}`):(`You lose this game! Score is ${yourScore} - ${computerScore}`);
+             showResult(ResultOfGame);
+             
+            }
+            game();
+    </script>
+</body>
+
+
+</html>
